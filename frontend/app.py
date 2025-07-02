@@ -34,7 +34,7 @@ if user_msg:
 
     # Extract reply from response
     res_json = res.json()
-    bot_reply = res_json.get("message", "No response from the backend")
+    bot_reply = res_json.get("message", "We're are sorry but we are having some trouble with the backend")
 
     # Add bot reply to chat
     st.session_state.chat_history.append({"role": "assistant", "content": bot_reply})
