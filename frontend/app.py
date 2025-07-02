@@ -27,8 +27,14 @@ if user_msg:
     st.session_state.chat_history.append({"role": "user", "content": user_msg})
     st.chat_message("user").write(user_msg)
 
-    # TODO: Send to FastAPI backend
-    bot_reply = "Hello"
+    # Send to FastAPI backend
+    res = requests.post("http://localhost:8000/chat", json={
+        "chat": user_msg
+    })
+
+    # Extract reply from response
+    res_json = res.json()
+    bot_reply = res_json.get("message", "No response from the backend")
 
     # Add bot reply to chat
     st.session_state.chat_history.append({"role": "assistant", "content": bot_reply})
