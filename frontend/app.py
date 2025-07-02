@@ -1,6 +1,11 @@
+import os
 import time
 import streamlit as st
 import requests
+
+backend_origin = os.getenv("BACKEND_ORIGIN")
+if backend_origin is None:
+    raise ValueError("BACKEND_ORIGIN is required")
 
 title = "CalPal: An Appointment Booking Assistant"
 
@@ -28,7 +33,7 @@ if user_msg:
     st.chat_message("user").write(user_msg)
 
     # Send to FastAPI backend
-    res = requests.post("http://localhost:8000/chat", json={
+    res = requests.post(f"{backend_origin}/chat", json={
         "chat": user_msg
     })
 
