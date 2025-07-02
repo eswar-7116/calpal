@@ -13,3 +13,6 @@ __pycache__
 
 # Google service account credentials JSON
 calpal-service-acc-creds.json
+
+# Test file
+test.py
