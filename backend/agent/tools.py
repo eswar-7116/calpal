@@ -1,5 +1,6 @@
 from backend.gcal_tools.tools import *
 from langchain.tools import tool
+import dateparser
 
 @tool
 def is_slot_free(date: str, duration_minutes: int = 30) -> bool:
@@ -52,4 +53,29 @@ def book_meeting(
     """
     return book_appointment(date, start_time, duration_minutes, title)
 
-tools = [is_slot_free, suggest_slots, book_meeting]
+@tool
+def resolve_datetime(text: str) -> str:
+    """
+    Converts a natural language date or time string into a standard datetime format.
+
+    This tool helps the AI interpret phrases like:
+    - "tomorrow at 4pm"
+    - "next Friday"
+    - "10-7-25"
+    - "Monday 10am"
+
+    Args:
+        text (str): A natural language representation of date and time.
+
+    Returns:
+        str: ISO 8601 formatted datetime string (e.g., '2025-07-02T16:00:00').
+
+    Example:
+        resolve_datetime("tomorrow at 4pm") → "2025-07-02T16:00:00"
+    """
+    dt = dateparser.parse(text)
+    if not dt:
+        raise ValueError("Could not parse the given date/time.")
+    return dt.isoformat()
+
+tools = [is_slot_free, suggest_slots, book_meeting, resolve_datetime]
