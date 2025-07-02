@@ -10,3 +10,6 @@ __pycache__
 # IDE
 .idea
 .vscode
+
+# Google service account credentials JSON
+calpal-service-acc-creds.json
