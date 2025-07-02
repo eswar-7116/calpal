@@ -12,7 +12,7 @@ __pycache__
 .vscode
 
 # Google service account credentials JSON
-calpal-service-acc-creds.json
+calpal_service_acc_creds.json
 
 # Test file
 test.py
