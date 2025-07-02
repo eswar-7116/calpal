@@ -1,3 +1,4 @@
+import json
 import os
 from datetime import datetime, timedelta
 
@@ -5,12 +6,13 @@ import pytz
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
-SERVICE_ACCOUNT_FILE = "backend/credentials/calpal_service_acc_creds.json"
 CALENDAR_ID = os.getenv("CALENDAR_ID")
 TIMEZONE = "Asia/Kolkata"
 
-creds = service_account.Credentials.from_service_account_file(
-    SERVICE_ACCOUNT_FILE,
+service_accnt_creds_json = json.loads(os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON"))
+
+creds = service_account.Credentials.from_service_account_info(
+    service_accnt_creds_json,
     scopes=["https://www.googleapis.com/auth/calendar"]
 )
 service = build("calendar", "v3", credentials=creds)
